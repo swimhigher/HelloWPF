@@ -18,6 +18,7 @@ namespace Zcy
             CommandBindings.Add(new CommandBinding(SystemCommands.MinimizeWindowCommand, MinimizeWindow, CanMinimizeWindow));
             CommandBindings.Add(new CommandBinding(SystemCommands.RestoreWindowCommand, RestoreWindow, CanResizeWindow));
             CommandBindings.Add(new CommandBinding(SystemCommands.ShowSystemMenuCommand, ShowSystemMenu));
+         
         }
 
         protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
@@ -79,7 +80,14 @@ namespace Zcy
             point = element.TransformToAncestor(this).Transform(point);
             SystemCommands.ShowSystemMenu(this, point);
         }
+        public void Userclick(object sender, ExecutedRoutedEventArgs e)
+        { 
+        
+        }
 
         #endregion
+    }
+    public class CusComment {
+        public static RoutedCommand UCClick;
     }
 }
