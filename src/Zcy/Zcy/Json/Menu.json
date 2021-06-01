@@ -1,0 +1,49 @@
+﻿{
+  "Menus": [
+    {
+      "Name": "工具箱",
+      "Code": "0",
+      "Url": "Transfer",
+      "Children": [
+        {
+          "Name": "翻译",
+          "Code": "2",
+          "Url": "Transfer"
+        },
+        {
+          "Name": "二维码",
+          "Code": "1",
+          "Url": "QRCode"
+        },
+        {
+          "Name": "加解密",
+          "Code": "3",
+          "Url": "Encry"
+        },
+        {
+          "Name": "url编码",
+          "Code": "4",
+          "Url": "UrlEcoding"
+        },
+        {
+          "Name": "Base64图片转换",
+          "Code": "5",
+          "Url": "ImageTran"
+        },
+        {
+          "Name": "Json格式化",
+          "Code": "6",
+          "Url": "JsonTree"
+        },
+        {
+          "Name": "Sql格式化",
+          "Code": "7",
+          "Url": "SqlFormat"
+        }
+      ]
+    }
+
+
+  ]
+
+}

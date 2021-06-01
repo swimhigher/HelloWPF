@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,8 +9,14 @@ using System.Windows.Input;
 
 namespace Zcy
 {
-    public class CustomWindow : Window
+    public class CustomWindow : Window, INotifyPropertyChanged
     {
+
+       
+
+
+        private static bool CanExcute(object obj) => true;
+
         public CustomWindow()
         {
             DefaultStyleKey = typeof(CustomWindow);
@@ -18,7 +25,8 @@ namespace Zcy
             CommandBindings.Add(new CommandBinding(SystemCommands.MinimizeWindowCommand, MinimizeWindow, CanMinimizeWindow));
             CommandBindings.Add(new CommandBinding(SystemCommands.RestoreWindowCommand, RestoreWindow, CanResizeWindow));
             CommandBindings.Add(new CommandBinding(SystemCommands.ShowSystemMenuCommand, ShowSystemMenu));
-         
+            CommandBindings.Add(new CommandBinding(UCCommend));
+
         }
 
         protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
@@ -80,14 +88,20 @@ namespace Zcy
             point = element.TransformToAncestor(this).Transform(point);
             SystemCommands.ShowSystemMenu(this, point);
         }
-        public void Userclick(object sender, ExecutedRoutedEventArgs e)
-        { 
-        
-        }
+
 
         #endregion
+        #region 自定义命令，，暂时用不上
+        public static RelayCommand UCCommend = new RelayCommand(CanExcute, Excute);
+
+
+        private static void Excute(object obj)
+        {
+
+        }
+        #endregion
+        public event PropertyChangedEventHandler PropertyChanged;
     }
-    public class CusComment {
-        public static RoutedCommand UCClick;
-    }
+
+
 }

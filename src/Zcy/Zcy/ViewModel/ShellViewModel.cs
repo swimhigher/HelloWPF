@@ -1,6 +1,8 @@
 ﻿using Caliburn.Micro;
+using Core.Helper;
 using System;
 using System.Collections.Generic;
+
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,6 +18,14 @@ namespace Zcy.View
         protected override void OnViewAttached(object view, object context)
         {
             base.OnViewAttached(view, context);
+            UserName = "Admin";
+            MenuJsonHelper.Init();
+
+            TreeMenus = MenuJsonHelper.Menus;
+            //var Menu1 = new MenuModel() { Name = "工具箱" };
+            //Menu1.Children = new List<MenuModel>();
+            //Menu1.Children.Add(new MenuModel ());
+            //TreeMenus.Menus.Add(Menu1);
         }
 
         private readonly IWindowManager _windowManager;
@@ -25,29 +35,26 @@ namespace Zcy.View
         {
             _windowManager = windowManager;
         }
-        string name;
 
-        public string Name
+        private string _UserName;
+
+        public string UserName
         {
-            get { return name; }
+            get { return _UserName; }
             set
             {
-                name = value;
-                NotifyOfPropertyChange(() => Name);
-                NotifyOfPropertyChange(() => CanSayHello);
+                _UserName = value;
+                NotifyOfPropertyChange(() => UserName);
             }
         }
+        private List<MenuModel> _TreeMenus;
 
-
-        public bool CanSayHello
+        public List<MenuModel> TreeMenus
         {
-            get { return !string.IsNullOrWhiteSpace(Name); }
+            get { return _TreeMenus; }
+            set { _TreeMenus = value; NotifyOfPropertyChange(() => TreeMenus); }
         }
 
-        public void SayHello()
-        {
-            MessageBox.Show(string.Format("Hello {0}!", Name)); //Don't do this in real life :)
-        }
 
         #region 弃用  改用windowsChrome实现
         //public Button WinMaxBtn;

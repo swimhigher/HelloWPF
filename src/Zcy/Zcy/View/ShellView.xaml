@@ -7,11 +7,12 @@
     xmlns:hc="https://handyorg.github.io/handycontrol"
     xmlns:local="clr-namespace:Zcy"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    Title="周朝阳管理平台"
+    Title="Happy Code And ICU"
     Width="1024"
     Height="768"
     MinWidth="1024"
     MinHeight="768"
+    Icon="../main.ico"
     WindowStyle="SingleBorderWindow"
     mc:Ignorable="d">
     <!--
@@ -42,53 +43,32 @@
             <Setter Property="BorderThickness" Value="0" />
 
         </Style>
+    
 
     </Window.Resources>
 
 
-    <Grid Background="White">
+    <!--<Grid Background="White">
         <Grid.RowDefinitions>
             <RowDefinition Height="48" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
+    </Grid>-->
 
-        <Grid Grid.Row="1">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="150" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-            <Button>这里是菜单</Button>
-            <Grid Grid.Column="1">
-
-                <Button>这里是内容</Button>
-                <ToolBarTray VerticalAlignment="Center">
-                    <ToolBar
-                        Padding="0"
-                        Background="Transparent"
-                        Band="0">
-                        <Menu VerticalAlignment="Center" Background="Transparent">
-                            <MenuItem Foreground="White" Header="代码">
-                                <MenuItem Header="GitHub">
-                                    <!--<MenuItem.Icon>
-                                                        <Path Data="{StaticResource GithubGeometry}" Fill="{DynamicResource PrimaryTextBrush}"/>
-                                                    </MenuItem.Icon>-->
-                                </MenuItem>
-                                <MenuItem Header="NuGet">
-                                    <!--<MenuItem.Icon>
-                                                        <Path Data="{StaticResource NugetGeometry}" Fill="#224880"/>
-                                                    </MenuItem.Icon>-->
-                                </MenuItem>
-                            </MenuItem>
-                            <MenuItem Foreground="White" Header="关于">
-                                <MenuItem Header="作者：周朝阳" />
-                                <MenuItem Header="QQ：757288665" />
-
-                            </MenuItem>
-
-                        </Menu>
-                    </ToolBar>
-                </ToolBarTray>
-            </Grid>
+    <Grid Grid.Row="1">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="150" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <TreeView ItemsSource="{Binding TreeMenus}">
+            <TreeView.ItemTemplate>
+                <HierarchicalDataTemplate ItemsSource="{Binding Children}">
+                    <TextBlock Text="{Binding Name}" />
+                </HierarchicalDataTemplate>
+            </TreeView.ItemTemplate>
+        </TreeView>
+        <Grid Grid.Column="1">
+            <!--<Button>这里是内容</Button>-->
         </Grid>
     </Grid>
 

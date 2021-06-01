@@ -130,7 +130,11 @@
         </Setter>
     </Style>-->
 
-
+    <LinearGradientBrush x:Key="LinearBrush">
+        <GradientStop Offset="0" Color="Orange" />
+        <GradientStop Offset="0.5" Color="Pink" />
+        <GradientStop Offset="1" Color="White" />
+    </LinearGradientBrush>
 
     <Style TargetType="{x:Type local:CustomWindow}">
         <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.WindowTextBrushKey}}" />
@@ -178,24 +182,23 @@
                                     <ColumnDefinition Width="0.3*" />
                                 </Grid.ColumnDefinitions>
                                 <StackPanel Orientation="Horizontal">
-                                    <ToolBarTray VerticalAlignment="Center">
+
+                                    <!--<ToolBarTray VerticalAlignment="Center">
                                         <ToolBar
                                             Padding="0"
                                             Background="Transparent"
                                             Band="0">
                                             <Menu VerticalAlignment="Center" Background="Transparent">
-                                                <MenuItem Foreground="White" Header="代码">
+                                    -->
+                                    <!--<MenuItem Foreground="White" Header="代码">
                                                     <MenuItem Header="GitHub">
-                                                        <!--<MenuItem.Icon>
-                                                        <Path Data="{StaticResource GithubGeometry}" Fill="{DynamicResource PrimaryTextBrush}"/>
-                                                    </MenuItem.Icon>-->
+
                                                     </MenuItem>
                                                     <MenuItem Header="NuGet">
-                                                        <!--<MenuItem.Icon>
-                                                        <Path Data="{StaticResource NugetGeometry}" Fill="#224880"/>
-                                                    </MenuItem.Icon>-->
+
                                                     </MenuItem>
-                                                </MenuItem>
+                                                </MenuItem>-->
+                                    <!--
                                                 <MenuItem Foreground="White" Header="关于">
                                                     <MenuItem Header="作者：周朝阳" />
                                                     <MenuItem Header="QQ：757288665" />
@@ -204,11 +207,11 @@
 
                                             </Menu>
                                         </ToolBar>
-                                    </ToolBarTray>
-                                    <Image
+                                    </ToolBarTray>-->
+                                    <!--<Image
                                         Margin="7,0,5,0"
                                         VerticalAlignment="Center"
-                                        Source="{TemplateBinding Icon}" />
+                                        Source="{TemplateBinding Icon}" />-->
                                     <Button
                                         Width="{x:Static SystemParameters.SmallIconWidth}"
                                         Height="{x:Static SystemParameters.SmallIconHeight}"
@@ -238,7 +241,7 @@
                                     VerticalAlignment="Center"
                                     Content="{TemplateBinding Title}"
                                     FontSize="{DynamicResource {x:Static SystemFonts.CaptionFontSize}}"
-                                    Foreground="White"
+                                    Foreground="{StaticResource LinearBrush}"
                                     IsTabStop="False" />
                                 <StackPanel
                                     x:Name="WindowCommandButtonsStackPanel"
@@ -249,23 +252,21 @@
                                     Background="Transparent"
                                     Orientation="Horizontal"
                                     WindowChrome.IsHitTestVisibleInChrome="True">
-                                    <Border CornerRadius="1">
-
-
-                                        <Image
-                                            Width="10"
-                                            Height="10"
-                                            Source="../Resources/Images/avater.jpg" />
-
+                                    <Border
+                                        Width="20"
+                                        Height="20"
+                                        Margin="0,0,5,0"
+                                        CornerRadius="10">
+                                        <Border.Background>
+                                            <ImageBrush ImageSource="/Resources/Images/avater.jpg" />
+                                        </Border.Background>
                                     </Border>
                                     <TextBlock
-                                        x:Name="UC"
                                         Margin="0,0,20,0"
                                         HorizontalAlignment="Center"
                                         VerticalAlignment="Center"
-                                        Foreground="White">
-                                        未登录
-                                    </TextBlock>
+                                        Foreground="White"
+                                        Text="{Binding UserName}" />
                                     <Button
                                         x:Name="Minimize"
                                         Command="{Binding Source={x:Static SystemCommands.MinimizeWindowCommand}}"

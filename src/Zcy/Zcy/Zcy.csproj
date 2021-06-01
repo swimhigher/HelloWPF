@@ -13,13 +13,31 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="main.ico" />
+    <None Remove="Resources\Images\avater.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Caliburn.Micro" Version="4.0.173" />
     <PackageReference Include="HandyControl" Version="3.1.0" />
     <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.31" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Resources\Images\avater.jpg">
+    <Content Include="main.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\avater.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Core\Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Json\Menu.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
