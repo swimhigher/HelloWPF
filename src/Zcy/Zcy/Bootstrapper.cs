@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using Zcy;
-using Zcy.View;
+using Zcy.Views;
 
 namespace Zcy
 {

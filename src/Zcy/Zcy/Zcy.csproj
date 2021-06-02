@@ -8,18 +8,20 @@
 
   <ItemGroup>
     <Compile Remove="TransitioningContentControl.cs" />
-    <Compile Remove="View\ShellView.xaml.cs" />
+    <Compile Remove="Views\ShellView.xaml.cs" />
     <Compile Remove="VisualStates.cs" />
   </ItemGroup>
 
   <ItemGroup>
     <None Remove="main.ico" />
+    <None Remove="Resources\Font\iconfont.ttf" />
     <None Remove="Resources\Images\avater.jpg" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Caliburn.Micro" Version="4.0.173" />
     <PackageReference Include="HandyControl" Version="3.1.0" />
+    <PackageReference Include="LiveCharts.Wpf.Core" Version="0.9.8" />
     <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.31" />
   </ItemGroup>
 
@@ -34,6 +36,12 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Core\Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Resources\Font\iconfont.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>

@@ -1,6 +1,25 @@
 ﻿{
   "Menus": [
     {
+      "Name": "欢迎",
+      "Code": "1",
+      "Url": "Transfer",
+      "Children": [
+        {
+          "Name": "性能监控",
+          "Code": "1",
+          "Url": "Transfer",
+          "Icon": "\ue620"
+        },
+        {
+          "Name": "项目介绍",
+          "Code": "2",
+          "Url": "Transfer",
+          "Icon": ""
+        }
+      ]
+    },
+    {
       "Name": "工具箱",
       "Code": "0",
       "Url": "Transfer",
@@ -8,36 +27,44 @@
         {
           "Name": "翻译",
           "Code": "2",
-          "Url": "Transfer"
+          "Url": "Transfer",
+          "Icon": "\ue6ba"
+
         },
         {
           "Name": "二维码",
           "Code": "1",
+          "Icon": "\ue646",
           "Url": "QRCode"
         },
         {
           "Name": "加解密",
           "Code": "3",
+          "Icon": "\uf463",
           "Url": "Encry"
         },
         {
           "Name": "url编码",
           "Code": "4",
+          "Icon": "\ue610",
           "Url": "UrlEcoding"
         },
         {
           "Name": "Base64图片转换",
           "Code": "5",
+          "Icon": "\ue661",
           "Url": "ImageTran"
         },
         {
           "Name": "Json格式化",
           "Code": "6",
+          "Icon": "\ue7bd",
           "Url": "JsonTree"
         },
         {
           "Name": "Sql格式化",
           "Code": "7",
+          "Icon": "\ue60f",
           "Url": "SqlFormat"
         }
       ]

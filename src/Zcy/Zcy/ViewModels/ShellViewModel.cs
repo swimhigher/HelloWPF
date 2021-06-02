@@ -2,18 +2,11 @@
 using Core.Helper;
 using System;
 using System.Collections.Generic;
+using Zcy.ViewModels.Welcome;
 
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Input;
-
-
-namespace Zcy.View
+namespace Zcy.Views
 {
-    public class ShellViewModel : ViewAware
+    public class ShellViewModel : Conductor<object>
     {
         protected override void OnViewAttached(object view, object context)
         {
@@ -22,10 +15,9 @@ namespace Zcy.View
             MenuJsonHelper.Init();
 
             TreeMenus = MenuJsonHelper.Menus;
-            //var Menu1 = new MenuModel() { Name = "工具箱" };
-            //Menu1.Children = new List<MenuModel>();
-            //Menu1.Children.Add(new MenuModel ());
-            //TreeMenus.Menus.Add(Menu1);
+
+            
+           
         }
 
         private readonly IWindowManager _windowManager;
@@ -34,6 +26,8 @@ namespace Zcy.View
         public ShellViewModel(IWindowManager windowManager)
         {
             _windowManager = windowManager;
+            UsageHelper.Initialize();
+            ActivateItemAsync( new PerformancemMonitorViewModel());
         }
 
         private string _UserName;
