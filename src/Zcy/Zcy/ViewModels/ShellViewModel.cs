@@ -2,6 +2,7 @@
 using Core.Helper;
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using Zcy.ViewModels.Welcome;
 
 namespace Zcy.Views
@@ -13,11 +14,7 @@ namespace Zcy.Views
             base.OnViewAttached(view, context);
             UserName = "Admin";
             MenuJsonHelper.Init();
-
             TreeMenus = MenuJsonHelper.Menus;
-
-            
-           
         }
 
         private readonly IWindowManager _windowManager;
@@ -27,7 +24,7 @@ namespace Zcy.Views
         {
             _windowManager = windowManager;
             UsageHelper.Initialize();
-            ActivateItemAsync( new PerformancemMonitorViewModel());
+            ActivateItemAsync(new PerformancemMonitorViewModel());
         }
 
         private string _UserName;
@@ -49,6 +46,34 @@ namespace Zcy.Views
             set { _TreeMenus = value; NotifyOfPropertyChange(() => TreeMenus); }
         }
 
+        public void MenuClick(object data)
+        {
+
+
+            try
+            {
+                var SelectedMenu = data as MenuModel;
+                if (string.IsNullOrWhiteSpace(SelectedMenu.Url))
+                {
+                    return;
+                }
+                var pageName = $"Zcy.ViewModels.{SelectedMenu.Url}";
+                if (pageName == ActiveItem.ToString())
+                {
+                    return;
+                }
+                //从程序集中获取指定对象类型;
+                Type type = Assembly.GetExecutingAssembly().GetType(pageName); //程序集名称.类名
+                Object obj = type.Assembly.CreateInstance(type.ToString());
+                ActivateItemAsync(obj);
+
+            }
+            catch (Exception)
+            {
+
+
+            }
+        }
 
         #region 弃用  改用windowsChrome实现
         //public Button WinMaxBtn;

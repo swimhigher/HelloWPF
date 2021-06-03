@@ -11,22 +11,125 @@
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
-    <Grid>
-        <UniformGrid Columns="2" Rows="2">
-            <StackPanel Margin="5">
+    <UserControl.Resources>
+        <Style x:Key="ChartTitle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="18" />
+            <Setter Property="Foreground" Value="DarkGreen" />
+        </Style>
+        <Style x:Key="ChartTitle_Y" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="10" />
+            <Setter Property="Foreground" Value="#9E9E9E" />
+            <Setter Property="Margin" Value="0,0,0,5" />
 
-                <lvc:CartesianChart Height="200">
+        </Style>
+    </UserControl.Resources>
+    <Grid>
+        <UniformGrid Columns="3" Rows="2">
+            <Grid Margin="5">
+                <TextBlock
+                    HorizontalAlignment="Center"
+                    Style="{StaticResource ChartTitle}"
+                    Text="CPU" />
+                <TextBlock
+                    Margin="0,20,0,0"
+                    HorizontalAlignment="Left"
+                    Style="{StaticResource ChartTitle_Y}"
+                    Text="%使用率" />
+
+                <lvc:CartesianChart Margin="0,40,0,20">
                     <lvc:CartesianChart.Series>
                         <!--  设置Series的类型为 Line 类型, 该类型提供了一些折线图的实现  -->
-                        <lvc:LineSeries Values="{Binding Path=CpuUseRateList, Mode=TwoWay}" />
-                        <!--  Values="19.451616,24.195124,14.830277,48.824387,23.092937,43.127823,24.789879,48.148457,31.565157,33.541256"  -->
+                        <lvc:LineSeries
+                            LineSmoothness="10"
+                            PointGeometrySize="1"
+                            Values="{Binding CpuUseRateList}" />
                     </lvc:CartesianChart.Series>
+                    <lvc:CartesianChart.AxisY>
+                        <lvc:Axis MaxValue="100" MinValue="0" />
+                    </lvc:CartesianChart.AxisY>
                     <lvc:CartesianChart.AxisX>
                         <lvc:Axis ShowLabels="False" />
                     </lvc:CartesianChart.AxisX>
                 </lvc:CartesianChart>
-                <TextBlock HorizontalAlignment="Center" Text="{Binding Path=CpuUseRateChat, Mode=TwoWay}" />
-            </StackPanel>
+                <DockPanel VerticalAlignment="Bottom">
+                    <TextBlock
+                        HorizontalAlignment="Left"
+                        Foreground="#9E9E9E"
+                        Text="-60s" />
+                    <TextBlock
+                        HorizontalAlignment="Right"
+                        Foreground="#9E9E9E"
+                        Text="0" />
+                </DockPanel>
+
+            </Grid>
+            <Grid Margin="5">
+                <TextBlock
+                    HorizontalAlignment="Center"
+                    Style="{StaticResource ChartTitle}"
+                    Text="Memory" />
+                <TextBlock
+                    Margin="0,20,0,0"
+                    HorizontalAlignment="Left"
+                    Style="{StaticResource ChartTitle_Y}"
+                    Text="%使用率" />
+                <lvc:AngularGauge
+                    Margin="0,40,0,0"
+                    FontSize="12"
+                    Foreground="White"
+                    FromValue="0"
+                    LabelsStep="10"
+                    NeedleFill="#795548"
+                    SectionsInnerRadius=".3"
+                    TicksForeground="White"
+                    TicksStep="2"
+                    ToValue="100"
+                    Wedge="270"
+                    Value="{Binding MemoryUse}">
+                    <lvc:AngularGauge.Sections>
+                        <lvc:AngularSection
+                            Fill="#C44CAF50"
+                            FromValue="0"
+                            ToValue="75" />
+                        <lvc:AngularSection
+                            Fill="#FF9800"
+                            FromValue="75"
+                            ToValue="90" />
+                        <lvc:AngularSection
+                            Fill="#F44336"
+                            FromValue="90"
+                            ToValue="100" />
+                    </lvc:AngularGauge.Sections>
+
+                </lvc:AngularGauge>
+
+
+
+            </Grid>
+            <Grid Margin="5">
+
+                <TextBlock
+                    HorizontalAlignment="Center"
+                    Style="{StaticResource ChartTitle}"
+                    Text="HardDisk" />
+                <TextBlock
+                    Margin="0,20,0,0"
+                    HorizontalAlignment="Left"
+                    Style="{StaticResource ChartTitle_Y}"
+                    Text="可用/已用" />
+                <lvc:CartesianChart Margin="0,40,0,0">
+                    <lvc:CartesianChart.Series>
+                        <lvc:StackedColumnSeries Values="{Binding PhysicalMemoryUseRateList}" />
+                        <lvc:StackedColumnSeries Values="{Binding SurplusPhysicalMemoryUseRateList}" />
+                    </lvc:CartesianChart.Series>
+                    <lvc:CartesianChart.AxisX>
+                        <lvc:Axis Labels="{Binding PhysicalAxis}" />
+                    </lvc:CartesianChart.AxisX>
+                    <lvc:CartesianChart.AxisY>
+                        <lvc:Axis Title="Usage" />
+                    </lvc:CartesianChart.AxisY>
+                </lvc:CartesianChart>
+            </Grid>
         </UniformGrid>
     </Grid>
 </UserControl>

@@ -26,8 +26,8 @@ namespace Core.Helper
         private static Timer _sampleTimer = null;
         private static readonly System.Diagnostics.PerformanceCounter _cpuCounter = new PerformanceCounter("Processor", "% Processor Time", "_Total");
 
-        public static LinkedList<float> _cpuUsageList = new LinkedList<float>();
-        public static LinkedList<float> _MemoryUsageList = new LinkedList<float>();
+        public static LinkedList<UseItemDto> _cpuUsageList = new LinkedList<UseItemDto>(); /*new LinkedList<float>();*/
+        public static LinkedList<UseItemDto> _MemoryUsageList = new LinkedList<UseItemDto>();
         private static readonly ReaderWriterLockSlim _rwLock = new ReaderWriterLockSlim();
 
         /// <summary>
@@ -35,8 +35,8 @@ namespace Core.Helper
         /// </summary>
         public static void Initialize()
         {
-            _cpuUsageList = new LinkedList<float>();
-            _MemoryUsageList = new LinkedList<float>();
+            //_cpuUsageList = new List<UseItemDto>();
+            // _MemoryUsageList = new LinkedList<float>();
             if (_sampleTimer == null)
             {
                 lock (_rwLock)
@@ -87,7 +87,7 @@ namespace Core.Helper
 
                 var skip = Math.Max(_cpuUsageList.Count - capacity, 0);//有效数 的下标
 
-                result = _cpuUsageList.Skip(skip).Average();//有效数后面的list求平均
+                result = _cpuUsageList.Skip(skip).Select(p => p.value).Average();//有效数后面的list求平均
             }
             finally
             {
@@ -118,7 +118,7 @@ namespace Core.Helper
 
                 var skip = Math.Max(_MemoryUsageList.Count - capacity, 0);//有效数 的下标
 
-                result = _MemoryUsageList.Skip(skip).Average();//有效数后面的list求平均
+                result = _MemoryUsageList.Skip(skip).Select(p => p.value).Average();//有效数后面的list求平均
             }
             finally
             {
@@ -156,7 +156,7 @@ namespace Core.Helper
 
                 var skip = Math.Max(_cpuUsageList.Count - capacity, 0);
 
-                result = _cpuUsageList.Skip(skip).Max();
+                result = _cpuUsageList.Skip(skip).Select(p => p.value).Max();
             }
             finally
             {
@@ -199,7 +199,7 @@ namespace Core.Helper
 
                 var skip = Math.Max(_cpuUsageList.Count - capacity, 0);
 
-                var count = _cpuUsageList.Skip(skip).Count(usage => usage >= threshold);
+                var count = _cpuUsageList.Skip(skip).Count(usage => usage.value >= threshold);
 
                 result = count * 1f / (_cpuUsageList.Count - skip);
             }
@@ -223,13 +223,13 @@ namespace Core.Helper
                 {
                     _cpuUsageList.RemoveFirst();
                 }
-                _cpuUsageList.AddLast(_cpuCounter.NextValue());
+                _cpuUsageList.AddLast(new UseItemDto(DateTime.Now, _cpuCounter.NextValue()));
 
                 if (_MemoryUsageList.Count >= CpuUsageListMaxCapacity)
                 {
                     _MemoryUsageList.RemoveFirst();
                 }
-                _MemoryUsageList.AddLast(MemoryAvailabled);
+                _MemoryUsageList.AddLast(new UseItemDto(DateTime.Now, MemoryAvailabled));
 
             }
             finally
@@ -309,7 +309,7 @@ namespace Core.Helper
 
 
         ///  
-        /// 获取磁盘使用情况 
+        /// 获取磁盘使用情况  使用百分比
         ///  
         public static Dictionary<string, double> GetLogicalDrives()
         {
@@ -333,7 +333,43 @@ namespace Core.Helper
             return result;
 
         }
+        ///  
+        /// 获取磁盘使用情况  已用  未用
+        ///  
+        public static List<(string, float, float)> GetLogicalDrives_Use()
+        {
+            List<(string, float, float)> result = new List<(string, float, float)>();
+            try
+            {
+                var diskcon = Directory.GetLogicalDrives();
+                if (diskcon != null && diskcon.Count() > 0)
+                {
+                    foreach (string diskname in diskcon)
+                    {
+                        DriveInfo di = new DriveInfo(diskname);
+                        result.Add((di.Name?.Substring(0, 1), (float)di.AvailableFreeSpace / 1073741824, (float)(di.TotalSize- di.AvailableFreeSpace) / 1073741824));
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+            return result;
 
+        }
 
     }
+    public class UseItemDto
+    {
+        public UseItemDto(DateTime datetime, float value)
+        {
+            this.datetime = datetime;
+            this.value = value;
+        }
+
+        public DateTime datetime { get; set; }
+        public float value { get; set; }
+    }
+
 }

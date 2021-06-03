@@ -66,7 +66,7 @@
             ItemsSource="{Binding TreeMenus}">
             <TreeView.ItemTemplate>
                 <HierarchicalDataTemplate ItemsSource="{Binding Children}">
-                    <WrapPanel>
+                    <WrapPanel cal:Message.Attach="[Event MouseLeftButtonDown] = [Action MenuClick($dataContext)]">
                         <TextBlock
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center"
