@@ -3,11 +3,14 @@ using Core.Helper;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
+using Zcy.Services;
+using Zcy.Services.Welcome;
+using Zcy.ViewModels;
 using Zcy.ViewModels.Welcome;
 
 namespace Zcy.Views
 {
-    public class ShellViewModel : Conductor<object>
+    public class ShellViewModel : BaseViewModel
     {
         protected override void OnViewAttached(object view, object context)
         {
@@ -16,16 +19,13 @@ namespace Zcy.Views
             MenuJsonHelper.Init();
             TreeMenus = MenuJsonHelper.Menus;
         }
-
-        private readonly IWindowManager _windowManager;
-
-
-        public ShellViewModel(IWindowManager windowManager)
+        public ShellViewModel(IEventAggregator events) : base(events)
         {
-            _windowManager = windowManager;
             UsageHelper.Initialize();
-            ActivateItemAsync(new PerformancemMonitorViewModel());
+            ActivateItemAsync(IoC.Get<IIntroduce>());
+            
         }
+
 
         private string _UserName;
 
@@ -39,6 +39,8 @@ namespace Zcy.Views
             }
         }
         private List<MenuModel> _TreeMenus;
+
+
 
         public List<MenuModel> TreeMenus
         {

@@ -54,39 +54,45 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
     </Grid>-->
+    <Grid>
 
-    <Grid Grid.Row="1">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="180" />
-            <ColumnDefinition Width="*" />
-        </Grid.ColumnDefinitions>
-        <TreeView
-            Padding="0,5"
-            Background="Transparent"
-            ItemsSource="{Binding TreeMenus}">
-            <TreeView.ItemTemplate>
-                <HierarchicalDataTemplate ItemsSource="{Binding Children}">
-                    <WrapPanel cal:Message.Attach="[Event MouseLeftButtonDown] = [Action MenuClick($dataContext)]">
-                        <TextBlock
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center"
-                            FontFamily="/Resources/Font/#iconfont"
-                            FontSize="18"
-                            Text="{Binding Icon}" />
-                        <TextBlock
-                            Margin="4,0,0,0"
-                            FontSize="14"
-                            Text="{Binding Name}" />
-                    </WrapPanel>
-                </HierarchicalDataTemplate>
-            </TreeView.ItemTemplate>
-        </TreeView>
-        <Grid Grid.Column="1">
-            <ContentControl x:Name="ActiveItem" />
 
-            <!--<Button>这里是内容</Button>-->
-
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="180" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <TreeView
+                Padding="0,5"
+                Background="Transparent"
+                ItemsSource="{Binding TreeMenus}">
+                <TreeView.ItemTemplate>
+                    <HierarchicalDataTemplate ItemsSource="{Binding Children}">
+                        <WrapPanel cal:Message.Attach="[Event MouseLeftButtonDown] = [Action MenuClick($dataContext)]">
+                            <TextBlock
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                FontFamily="/Resources/Font/#iconfont"
+                                FontSize="18"
+                                Text="{Binding Icon}" />
+                            <TextBlock
+                                Margin="4,0,0,0"
+                                FontSize="14"
+                                Text="{Binding Name}" />
+                        </WrapPanel>
+                    </HierarchicalDataTemplate>
+                </TreeView.ItemTemplate>
+            </TreeView>
+            <Grid Grid.Column="1">
+                <ContentControl x:Name="ActiveItem" />
+            </Grid>
         </Grid>
+        <ScrollViewer HorizontalAlignment="Right" VerticalScrollBarVisibility="Hidden">
+            <StackPanel
+                Margin="0,10,10,10"
+                VerticalAlignment="Top"
+                hc:Growl.Token="InfoMsg" />
+        </ScrollViewer>
     </Grid>
 
 </local:CustomWindow>

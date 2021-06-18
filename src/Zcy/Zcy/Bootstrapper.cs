@@ -6,7 +6,9 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Threading;
 using Zcy;
+using Zcy.Helpers;
 using Zcy.Views;
 
 namespace Zcy
@@ -16,7 +18,26 @@ namespace Zcy
         public Bootstrapper()
         {
             Initialize();
+            Application.DispatcherUnhandledException += Application_DispatcherUnhandledException; 
+            AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException; 
         }
+
+        private void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
+        {
+            Exception ex = e.ExceptionObject as Exception;
+            var msg = string.Format("捕获到未处理异常：{0}\r\n异常信息：{1}\r\n异常堆栈：{2}\r\nCLR即将退出：{3}", ex.GetType(), ex.Message, ex.StackTrace, e.IsTerminating);
+
+            // Log.Error(msg);
+            MessageBox.Show("系统异常");
+        }
+
+        private void Application_DispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
+        {
+            // Log.Error(e.Exception, "系统异常");
+            MessageBox.Show("系统异常");
+            e.Handled = true;
+        }
+
         private SimpleContainer container;
 
         protected override void OnStartup(object sender, StartupEventArgs e)
@@ -26,11 +47,8 @@ namespace Zcy
         protected override void Configure()
         {
             container = new SimpleContainer();
-
-            container.Singleton<IWindowManager, WindowManager>();
-            container.Singleton<IEventAggregator, EventAggregator>();
-
-            container.PerRequest<ShellViewModel>();
+            container.CustomerRegister();
+            
         }
 
         protected override object GetInstance(Type service, string key)
